@@ -29,16 +29,5 @@ namespace StarWasProxy
 
             return people == null ? new PeopleList(Array.Empty<Person>()) : people;
         }
-
-        public async Task<Person> GetPerson(int id)
-        {
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://swapi.dev/api/people/{id}/");
-            var response = await _httpClient.SendAsync(httpRequestMessage);
-
-            var json = await response.Content.ReadAsStringAsync();
-            var person = JsonSerializer.Deserialize<Person>(json, _jsonSerializerOptions);
-
-            return person ?? throw new Exception($"Person with id {id} not found");
-        }
     }
 }
